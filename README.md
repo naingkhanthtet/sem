@@ -7,4 +7,4 @@
 [![Releases](https://img.shields.io/github/release/naingkhanthtet/sem/all.svg?style=flat-square)](https://github.com/naingkhanthtet/sem/releases)
 
 # Software Engineering Methods
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/naingkhanthtet/sem/main.yml/develop?style=flat-square)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/naingkhanthtet/sem/build/main?style=flat-square)
