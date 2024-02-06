@@ -10,7 +10,7 @@ public class App {
     private Connection con = null;
 
     //    Connect to MySQL database.
-    public void connect(String location, int delay) {
+    public void connect(String location, String password, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -28,7 +28,7 @@ public class App {
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location
                                 + "/employees?allowPublicKeyRetrieval=true&useSSL=false",
-                        "root", "");
+                        "root", password);
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -205,9 +205,9 @@ public class App {
         App a = new App();
 
         if (args.length < 1) {
-            a.connect("localhost:3306", 30000);
+            a.connect("localhost:3306", "Naing15!", 2000);
         } else {
-            a.connect("db:3306", 30000);
+            a.connect("db:3306", "example", 2000);
         }
 
         Department dept = a.getDepartment("Development");
