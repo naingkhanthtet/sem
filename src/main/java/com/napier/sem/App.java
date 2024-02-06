@@ -214,7 +214,7 @@ public class App {
         ArrayList<Employee> employees = a.getSalariesByDepartment(dept);
 
 
-        // Print salary report
+        // Print salary reports
         a.printSalaries(employees);
 
         // Disconnect from database
