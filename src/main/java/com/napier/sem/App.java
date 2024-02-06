@@ -9,8 +9,28 @@ public class App {
      */
     private Connection con = null;
 
+    public static void main(String[] args) {
+        // Create new Application and connect to database
+        App a = new App();
+
+        if (args.length < 1) {
+            a.connect("localhost:33060", 20000);
+        } else {
+            a.connect("db:3306", 2000);
+        }
+
+        Department dept = a.getDepartment("Development");
+        ArrayList<Employee> employees = a.getSalariesByDepartment(dept);
+
+        // Print salary reports
+        a.printSalaries(employees);
+
+        // Disconnect from database
+        a.disconnect();
+    }
+
     //    Connect to MySQL database.
-    public void connect(String location, String password, int delay) {
+    public void connect(String location, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -28,7 +48,7 @@ public class App {
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location
                                 + "/employees?allowPublicKeyRetrieval=true&useSSL=false",
-                        "root", password);
+                        "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -197,27 +217,5 @@ public class App {
             String emp_string = String.format("%-10s %-15s %-20s %-8s", emp.emp_no, emp.first_name, emp.last_name, emp.salary);
             System.out.println(emp_string);
         }
-    }
-
-
-    public static void main(String[] args) {
-        // Create new Application and connect to database
-        App a = new App();
-
-        if (args.length < 1) {
-            a.connect("localhost:3306", "Naing15!", 2000);
-        } else {
-            a.connect("db:3306", "example", 2000);
-        }
-
-        Department dept = a.getDepartment("Development");
-        ArrayList<Employee> employees = a.getSalariesByDepartment(dept);
-
-
-        // Print salary reports
-        a.printSalaries(employees);
-
-        // Disconnect from database
-        a.disconnect();
     }
 }
