@@ -10,7 +10,7 @@ public class App {
     private Connection con = null;
 
     //    Connect to MySQL database.
-    public void connect() {
+    public void connect(String location, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -24,9 +24,11 @@ public class App {
             System.out.println("Connecting to database...");
             try {
                 // Wait a bit for db to start
-                Thread.sleep(30000);
+                Thread.sleep(delay);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location
+                                + "/employees?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -117,7 +119,7 @@ public class App {
                     "AND employees.emp_no = dept_emp.emp_no\n" +
                     "AND dept_emp.dept_no = departments.dept_no\n" +
                     "AND salaries.to_date = '9999-01-01'\n" +
-                    "AND departments.dept_no = '<dept_no>'\n" +
+                    "AND departments.dept_no = '" + dept.dept_no + "'\n" +
                     "ORDER BY employees.emp_no ASC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -199,19 +201,20 @@ public class App {
 
 
     public static void main(String[] args) {
-        // Create new Application
+        // Create new Application and connect to database
         App a = new App();
 
-        // Connect to database
-        a.connect();
+        if (args.length < 1) {
+            a.connect("localhost:33060", 30000);
+        } else {
+            a.connect(args[0], Integer.parseInt(args[1]));
+        }
 
-        // Extract employee salary information
-        ArrayList<Employee> employees = a.getAllSalaries();
+        Department dept = a.getDepartment("Development");
+        ArrayList<Employee> employees = a.getSalariesByDepartment(dept);
 
-        // Test the size of the returned data - should be 240124
-        System.out.println(employees.size());
 
-        // print salaries
+        // Print salary report
         a.printSalaries(employees);
 
         // Disconnect from database
