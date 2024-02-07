@@ -104,7 +104,7 @@ public class App {
             // Create string for SQL statement
             String strSelect = "SELECT dept_no, dept_name "
                     + "FROM departments "
-                    + "WHERE dept_name = " + dept_name;
+                    + "WHERE dept_name = '" + dept_name + "'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new department if valid.
