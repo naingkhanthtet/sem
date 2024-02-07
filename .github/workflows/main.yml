@@ -2,6 +2,7 @@ name: A workflow for my Hello World App
 on:
   push:
     branches:
+      - master
       - feature/nkhlab8
 jobs:
   UnitTests:
@@ -19,22 +20,13 @@ jobs:
           distribution: 'adopt'
       - name: Unit Tests
         run: mvn -Dtest=com.napier.sem.AppTest test
-      - name: CodeCov for develop
+      - name: CodeCov
         uses: codecov/codecov-action@v2
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
           flags: Unit Tests # optional
           verbose: true # optional (default = false)
-          branch: develop
-      - name: CodeCov for master
-        uses: codecov/codecov-action@v2
-        with:
-          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          directory: ./target/site/jacoco
-          flags: Unit Tests # optional
-          verbose: true # optional (default = false)
-          branch: master
 
   IntegrationTests:
     name: Integration Tests
@@ -64,6 +56,7 @@ jobs:
           directory: ./target/site/jacoco
           flags: Integration Tests # optional
           verbose: true # optional (default = false)
+          branch: master
   build:
     name: Build Run in Docker and Deploy Release
     runs-on: ubuntu-20.04
