@@ -14,7 +14,7 @@ public class App {
         App a = new App();
 
         if (args.length < 1) {
-            a.connect("localhost:33060", 40000);
+            a.connect("localhost:33060", 10000);
         } else {
             a.connect("db:3306", 2000);
         }
