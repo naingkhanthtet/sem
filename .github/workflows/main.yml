@@ -43,12 +43,13 @@ jobs:
           docker rm employees
           docker image rm database
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v2
         with:
-#          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          #          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
-          flags: Integration Tests # optional
+          flags: Integration-Tests # optional
           verbose: true # optional (default = false)
+          branch: feature/nkhlab8
   build:
     name: Build and Start Using docker-compose
     runs-on: ubuntu-20.04
