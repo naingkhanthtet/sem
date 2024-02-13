@@ -14,9 +14,9 @@ public class App {
         App a = new App();
 
         if (args.length < 1) {
-            a.connect("localhost:33061", 10000);
+            a.connect("localhost:33061", 0);
         } else {
-            a.connect("db:3306", 2000);
+            a.connect("db:3306", 10000);
         }
 
         Department dept = a.getDepartment("Development");
